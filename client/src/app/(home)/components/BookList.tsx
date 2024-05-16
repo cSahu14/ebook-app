@@ -3,7 +3,11 @@ import React from 'react';
 import BookCard from './BookCard';
 
 const BookList = async () => {
-  const response = await fetch(`${process.env.SERVER_URL}/books`);
+  const response = await fetch(`${process.env.SERVER_URL}/books`, {
+    next: {
+      revalidate: 3600,
+    },
+  });
   if (!response.ok) {
     throw new Error('An Error Occure While Fetch Book Data.');
   }
