@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import cloudinary from "../config/cloudinary";
-import path from "node:path";
+import path, { resolve } from "node:path";
 import createHttpError from "http-errors";
 import bookModel from "./bookModel";
 import fs from "node:fs";
@@ -155,6 +155,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const listBooks = async (req: Request, res: Response, next: NextFunction) => {
+  const sleep = await new Promise((resolve) => setTimeout(resolve, 5000));
   try {
     // Add pagination
     const books = await bookModel.find().populate("author", "name");
