@@ -8,11 +8,10 @@ import { AuthRequest } from "../middlewares/authenticate";
 import { Book } from "./bookTypes";
 
 const createBook = async (req: Request, res: Response, next: NextFunction) => {
-  const { title, genre } = req.body;
+  const { title, genre, description } = req.body;
 
   try {
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-    console.log("files", files);
     const coverImageMimeType = files.coverImage[0].mimetype.split("/").at(-1);
     const fileName = files.coverImage[0].filename;
     const filePath = path.resolve(
@@ -41,14 +40,11 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
       format: "pdf",
     });
 
-    console.log("bookUploadResult", bookUploadResult);
-
-    console.log("uploadResult", uploadResult);
-
     const _req = req as AuthRequest;
 
     const newBook = await bookModel.create({
       title,
+      description,
       genre,
       author: _req.userId,
       coverImage: uploadResult.secure_url,
