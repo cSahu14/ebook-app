@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <h1>Welcome to Ebook dashboard.</h1>
+      <h1>Welcome to ebook app</h1>
     </>
   );
 }
