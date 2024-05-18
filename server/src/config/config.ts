@@ -11,6 +11,7 @@ const _config = {
   cloudinary_api_key: process.env.COUDINARY_API_KEY,
   cloudinary_api_secret: process.env.COUDINARY_API_SECRET,
   frontendDomain: process.env.FRONTEND_DOMAIN,
+  frontendDomainAdmin: process.env.FRONTEND_DOMAIN_ADMIN,
 };
 
 export const config = Object.freeze(_config);

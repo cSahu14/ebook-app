@@ -6,9 +6,20 @@ import bookRouter from "./book/bookRouter";
 import { config } from "./config/config";
 
 const app = express();
+
+const allowedOrigins = [config?.frontendDomain, config?.frontendDomainAdmin];
+
 app.use(
   cors({
-    origin: config.frontendDomain,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 app.use(express.json());
