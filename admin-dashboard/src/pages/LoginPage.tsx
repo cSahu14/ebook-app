@@ -10,6 +10,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { login } from '@/http/api';
+import useTokenStore from '@/store';
 import { useMutation } from '@tanstack/react-query';
 import { LoaderCircle } from 'lucide-react';
 import { useRef } from 'react';
@@ -17,13 +18,15 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const setToken = useTokenStore((state) => state.setToken);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
     mutationFn: login,
-    onSuccess: () => {
-      console.log('Login Successfull.');
+    onSuccess: (response) => {
+      console.log('Login Successfull.', response);
+      setToken(response.data.accessToken);
       navigate('/dashboard/home');
     },
   });
